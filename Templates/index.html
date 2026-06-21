@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks API</title>
+</head>
+
+<body>
+    <label>Enter Ticker</label>
+    <input type="text" id="ticker">
+    <button id="search">Search</button>
+
+    <script>
+    document.getElementById("search").addEventListener("click", function() {
+        let ticker = document.getElementById("ticker").value
+        
+        fetch(`/stock/${ticker}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+    })
+    </script>
+</body>
+</html>

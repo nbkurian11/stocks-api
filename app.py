@@ -1,8 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 import yfinance as yf
 
+
+
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 @app.route("/stock/<ticker>")
 
@@ -16,7 +22,6 @@ def get_stock(ticker):
         return jsonify({
             "ticker": ticker.upper(),
             "currency": info["currency"],
-            "price": info["currentPrice"],
             "price": info["currentPrice"],
             "change": info["regularMarketChange"],
             "change_percent": info["regularMarketChangePercent"],
