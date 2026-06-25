@@ -2,8 +2,6 @@ from flask import Flask, jsonify, render_template
 
 import yfinance as yf
 
-
-
 app = Flask(__name__)
 
 @app.route("/")
