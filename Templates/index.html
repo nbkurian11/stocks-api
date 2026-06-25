@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stocks API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
 </head>
-
 <body>
-    <label>Enter Ticker</label>
-    <input type="text" id="ticker">
-    <button id="search">Search</button>
-
-    <script>
-    document.getElementById("search").addEventListener("click", function() {
-        let ticker = document.getElementById("ticker").value
+    
+    <div class="container">
+        <h1>Stocks API</h1>
+        <label>Enter Ticker</label>
+        <input type="text" id="ticker">
+        <button id="search">Search</button>
         
-        fetch(`/stock/${ticker}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
-    })
-    </script>
+        <div id="result"></div>
+
+        <script>
+             document.getElementById("search").addEventListener("click", function() {
+            let ticker = document.getElementById("ticker").value
+            
+            fetch(`/stock/${ticker}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerHTML = `
+                        <h2>${data.ticker}</h2>
+                        <p>Price: $${data.price}</p>
+                        <p class="${data.change >= 0 ? 'positive' : 'negative'}">
+                        Change: ${data.change >= 0 ? '+$' : '-$'}${Math.abs(data.change).toFixed(2)}</p>
+                        <p class="${data.change_percent >= 0 ? 'positive' : 'negative'}">
+                        Change Percent: ${data.change_percent >= 0 ? '+' : '-'}${Math.abs(data.change_percent).toFixed(2)}%</p>
+                        <p>52W Low: $${data["52w_low"]}</p>
+                        <p>52W High: $${data["52w_high"]}</p>
+                    `
+                })
+        })
+        </script>
+    </div>
 </body>
 </html>
